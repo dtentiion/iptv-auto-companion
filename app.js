@@ -1,6 +1,16 @@
 const state = {
   channels: [],
+  pairCode: new URL(location.href).searchParams.get('code'),
 };
+
+const BACKEND = 'https://api.aaos-iptv.com';
+
+// If we landed here from the car's QR scan, the URL carries ?code=XXXXXX.
+// Surface the Send-to-car card in the Export section.
+if (state.pairCode) {
+  document.getElementById('send-card').hidden = false;
+  document.getElementById('pair-code').textContent = state.pairCode;
+}
 
 // --- tab switching ---
 document.querySelectorAll('.tab').forEach((t) => {
@@ -162,19 +172,26 @@ document.getElementById('copy-m3u').addEventListener('click', async () => {
   setTimeout(() => (btn.textContent = old), 1200);
 });
 
-// --- QR generation ---
-let qrInstance = null;
-document.getElementById('make-qr').addEventListener('click', () => {
-  const url = document.getElementById('host-url').value.trim();
-  if (!url) return;
-  const container = document.getElementById('qr-container');
-  container.innerHTML = '';
-  qrInstance = new QRCode(container, {
-    text: url,
-    width: 260,
-    height: 260,
-    colorDark: '#0b0b0f',
-    colorLight: '#ffffff',
-    correctLevel: QRCode.CorrectLevel.M,
-  });
+// --- send to car via the pairing backend ---
+document.getElementById('send-to-car').addEventListener('click', async () => {
+  if (!state.pairCode) return;
+  const btn = document.getElementById('send-to-car');
+  const status = document.getElementById('send-status');
+  btn.disabled = true;
+  status.textContent = 'Sending...';
+  status.className = 'send-status';
+  try {
+    const res = await fetch(`${BACKEND}/pair/${state.pairCode}/playlist`, {
+      method: 'PUT',
+      headers: { 'content-type': 'application/vnd.apple.mpegurl' },
+      body: buildM3u(),
+    });
+    if (!res.ok) throw new Error(`HTTP ${res.status}`);
+    status.textContent = 'Sent — check the car.';
+    status.classList.add('ok');
+  } catch (err) {
+    status.textContent = `Failed: ${err.message}`;
+    status.classList.add('err');
+    btn.disabled = false;
+  }
 });

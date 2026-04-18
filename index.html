@@ -57,22 +57,21 @@
 
   <section class="export" id="export-panel" hidden>
     <h2>Export</h2>
-    <p class="hint">Two ways to get this playlist into your car.</p>
+    <p class="hint">Send this playlist to the car, or keep a copy for yourself.</p>
 
     <div class="export-grid">
-      <div class="export-card">
-        <h3>Option 1 — Host an m3u</h3>
-        <p>Upload this file somewhere public (GitHub Gist, Pastebin), then on the car scan the QR with the hosted URL.</p>
-        <button id="download-m3u" class="btn-secondary">Download playlist.m3u</button>
-        <button id="copy-m3u" class="btn-secondary">Copy text</button>
+      <div class="export-card" id="send-card" hidden>
+        <h3>Send to car</h3>
+        <p>Paired with code <span id="pair-code"></span>. Tap Send to push the playlist over.</p>
+        <button id="send-to-car" class="btn-primary">Send to car</button>
+        <p id="send-status" class="send-status"></p>
       </div>
 
       <div class="export-card">
-        <h3>Option 2 — QR of the URL</h3>
-        <p>Paste the URL where you hosted the m3u and we'll make a QR the car can scan.</p>
-        <input type="url" id="host-url" placeholder="https://gist.githubusercontent.com/...raw/playlist.m3u" />
-        <button id="make-qr" class="btn-primary">Generate QR</button>
-        <div id="qr-container"></div>
+        <h3>Local copy</h3>
+        <p>Download the built playlist or copy it to the clipboard.</p>
+        <button id="download-m3u" class="btn-secondary">Download playlist.m3u</button>
+        <button id="copy-m3u" class="btn-secondary">Copy text</button>
       </div>
     </div>
   </section>
@@ -82,7 +81,6 @@
   <span>github.com/dtentiion</span>
 </footer>
 
-<script src="https://cdn.jsdelivr.net/gh/davidshimjs/qrcodejs@master/qrcode.min.js"></script>
 <script src="app.js"></script>
 </body>
 </html>

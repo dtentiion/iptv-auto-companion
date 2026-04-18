@@ -242,17 +242,22 @@ button:active { transform: scale(0.97); }
 
 .export-card input { margin-bottom: 6px; }
 
-#qr-container {
-  margin-top: 12px;
-  display: flex;
-  justify-content: center;
+#pair-code {
+  font-family: ui-monospace, "SF Mono", Consolas, monospace;
+  color: var(--accent);
+  font-weight: 700;
+  letter-spacing: 2px;
 }
 
-#qr-container img, #qr-container canvas {
-  border-radius: 12px;
-  background: #fff;
-  padding: 10px;
+.send-status {
+  margin: 8px 0 0;
+  font-size: 14px;
+  color: var(--muted);
+  min-height: 1em;
 }
+
+.send-status.ok { color: var(--accent); }
+.send-status.err { color: var(--danger); }
 
 .bottombar {
   position: fixed;

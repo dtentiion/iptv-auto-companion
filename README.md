@@ -17,6 +17,8 @@ Just open `index.html` in a browser. No build step, no backend.
 
 - **Builder tab**: add channels one at a time (name + HLS URL + optional logo URL + optional group).
 - **Paste M3U tab**: paste a raw extended m3u or fetch one from a URL; parses tvg-logo and group-title.
-- **Export**: download the combined playlist as `.m3u`, copy it to clipboard, or paste a hosted URL to generate a QR the car can scan.
+- **Export**:
+  - If you got here by scanning the car's QR (URL contains `?code=XXXXXX`), tap **Send to car** — the playlist is uploaded to `api.aaos-iptv.com` and the car polls for it automatically.
+  - Otherwise, download the `.m3u` file or copy the text and share it however you like.
 
 Logos are always referenced by URL, so the playlist file stays small enough to host on a gist or pastebin.
