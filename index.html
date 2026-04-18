@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>IPTV Companion</title>
+<link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+<header class="topbar">
+  <div class="brand">IPTV Companion</div>
+</header>
+
+<main class="shell">
+  <div class="tabs" role="tablist">
+    <button class="tab active" data-tab="builder" role="tab">Builder</button>
+    <button class="tab" data-tab="pro" role="tab">Paste M3U</button>
+  </div>
+
+  <section id="tab-builder" class="tab-panel active">
+    <h2>Add channels</h2>
+    <p class="hint">Build a playlist entry-by-entry. Logos are loaded by URL — host yours on any public image host (Imgur, GitHub raw, etc.).</p>
+
+    <form id="channel-form" class="form-card">
+      <label>
+        Channel name
+        <input type="text" id="ch-name" placeholder="Amozhgary TV" required />
+      </label>
+      <label>
+        Stream URL (HLS / m3u8)
+        <input type="url" id="ch-stream" placeholder="https://example.com/live/stream.m3u8" required />
+      </label>
+      <label>
+        Logo URL (optional)
+        <input type="url" id="ch-logo" placeholder="https://example.com/logo.png" />
+      </label>
+      <label>
+        Group (optional)
+        <input type="text" id="ch-group" placeholder="News" />
+      </label>
+      <button type="submit" class="btn-primary">Add channel</button>
+    </form>
+
+    <ul id="channel-list" class="channel-list"></ul>
+  </section>
+
+  <section id="tab-pro" class="tab-panel">
+    <h2>Paste M3U</h2>
+    <p class="hint">Paste a raw extended m3u playlist or a URL that returns one. We'll parse it and let you edit before export.</p>
+    <textarea id="pro-input" placeholder="#EXTM3U&#10;#EXTINF:-1 tvg-logo=&quot;...&quot; group-title=&quot;News&quot;,Channel Name&#10;https://example.com/stream.m3u8"></textarea>
+    <div class="row">
+      <input type="url" id="pro-url" placeholder="Or paste an m3u URL" />
+      <button id="pro-fetch" class="btn-secondary">Fetch</button>
+    </div>
+    <button id="pro-parse" class="btn-primary">Parse</button>
+  </section>
+
+  <section class="export" id="export-panel" hidden>
+    <h2>Export</h2>
+    <p class="hint">Two ways to get this playlist into your car.</p>
+
+    <div class="export-grid">
+      <div class="export-card">
+        <h3>Option 1 — Host an m3u</h3>
+        <p>Upload this file somewhere public (GitHub Gist, Pastebin), then on the car scan the QR with the hosted URL.</p>
+        <button id="download-m3u" class="btn-secondary">Download playlist.m3u</button>
+        <button id="copy-m3u" class="btn-secondary">Copy text</button>
+      </div>
+
+      <div class="export-card">
+        <h3>Option 2 — QR of the URL</h3>
+        <p>Paste the URL where you hosted the m3u and we'll make a QR the car can scan.</p>
+        <input type="url" id="host-url" placeholder="https://gist.githubusercontent.com/...raw/playlist.m3u" />
+        <button id="make-qr" class="btn-primary">Generate QR</button>
+        <div id="qr-container"></div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer class="bottombar">
+  <span>github.com/dtentiion</span>
+</footer>
+
+<script src="https://cdn.jsdelivr.net/gh/davidshimjs/qrcodejs@master/qrcode.min.js"></script>
+<script src="app.js"></script>
+</body>
+</html>
